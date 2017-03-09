@@ -55,7 +55,9 @@ try {
   }
 }
 
-console.log('ENV: ' + process.env.NODE_ENV)
+console.log(`ENV: ${process.env.NODE_ENV}
+------
+MONGO: ${process.env.MONGODB_URI}`)
 
 
 // Start server
