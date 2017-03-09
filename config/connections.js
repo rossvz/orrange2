@@ -3,6 +3,6 @@ module.exports.connections = {
 
   mongolab: {
     adapter: 'sails-mongo',
-    connectionString: process.env.MONGODB_URI
+    url: process.env.MONGODB_URI
   }
 }
