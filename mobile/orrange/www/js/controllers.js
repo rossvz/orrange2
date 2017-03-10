@@ -93,6 +93,11 @@ angular.module('starter.controllers', [])
       $state.go('setlist-detail')
     }
 
+    this.removeSet = function (set, i) {
+      setlist.allsets.splice(i, 1)
+      setlist.delete(set)
+    }
+
     this.addNewSet = function () {
       $scope.data = {}
       var popup = $ionicPopup.show({

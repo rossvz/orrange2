@@ -29,14 +29,20 @@
             <ion-list>
                 <ion-item ng-repeat="seg in ctrl.song.segments"
                           ng-class="seg.label">
-                    <select ng-options="label for label in ctrl.segmentLabels" ng-model="seg.label"
-                            class="item-label segment-label">
-                    </select>
-                    <!--<label class="item-input item-select">-->
-                    <input type="text" ng-model="seg.chords" class="segment-chords"
-                           ng-change="ctrl.focusSegment($index)" ng-class="{focused:seg.focused}">
+                    <div class="row">
+                        <div class="col col-75"><select ng-options="label for label in ctrl.segmentLabels"
+                                                        ng-model="seg.label"
+                                                        class="item-label segment-label">
+                        </select>
+                            <input type="text" ng-model="seg.chords" class="segment-chords"
+                                   ng-change="ctrl.focusSegment($index)" ng-class="{focused:seg.focused}">
 
-                    <!--</label>-->
+
+                        </div>
+                        <div class="col col-25">
+                            <textarea type="text" rows="4" placeholder="Notes" ng-model="seg.notes"></textarea>
+                        </div>
+                    </div>
 
                     <ion-option-button ng-click="ctrl.up(seg,$index)" class="icon ion-ios-arrow-up"></ion-option-button>
                     <ion-option-button ng-click="ctrl.down(seg,$index)"

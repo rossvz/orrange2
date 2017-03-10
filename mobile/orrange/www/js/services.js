@@ -1,7 +1,13 @@
 angular.module('starter.services', [])
 
   .service('constants', function () {
+    var deviceInfo = ionic.Platform.device()
+    var mobile = ionic.Platform.isIOS() || ionic.Platform.isAndroid()
+    if (mobile) {
+      this.APIURL = 'http://orrange.herokuapp.com'
+    }
     this.APIURL = 'http://localhost:1337'
+    console.log('APIURL', this.APIURL)
   })
 
   .service('songs', function (constants, $http, $q) {
