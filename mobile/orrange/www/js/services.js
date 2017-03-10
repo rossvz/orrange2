@@ -57,9 +57,16 @@ angular.module('starter.services', [])
         me.allsets = res.data
       })
     }
-    this.create = function (setlist) {
+    this.create = function (options) {
+      var setlist = {
+        name: options.name,
+        songs: [],
+        date: options.date || new Date()
+      }
       var url = constants.APIURL + '/setlist'
-      return $http.post(url, setlist)
+      return $http.post(url, setlist).then(function (res) {
+        me.allsets.push(setlist)
+      })
     }
     this.update = function (setlist) {
       var url = constants.APIURL + '/setlist/' + setlist.id
@@ -70,8 +77,8 @@ angular.module('starter.services', [])
       return $http.delete(url, setlist)
     }
     this.addSongByName = function (set, songName) {
-      songs.getSongByName(songName).then(function (song) {
-        set.songs.push(song)
+      songs.getSongByName(songName).then(function (songs) {
+        set.songs.push(songs[0])
         me.update(set).then(function (res) {
         })
       })

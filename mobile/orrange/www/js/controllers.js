@@ -76,7 +76,7 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('SetlistCtrl', function ($scope, setlist, songs) {
+  .controller('SetlistCtrl', function ($scope, setlist, songs, $state, $ionicPopup) {
     var me = this
     setlist.get().then(function () {
       me.sets = setlist.allsets
@@ -84,9 +84,44 @@ angular.module('starter.controllers', [])
     this.expandSet = function (set) {
       set.expand = !set.expand
     }
+
+    this.goToSet = function (set) {
+      setlist.currentSet = set
+      console.log('setting set as current: ',
+        setlist.currentSet
+      )
+      $state.go('setlist-detail')
+    }
+
+    this.addNewSet = function () {
+      $scope.data = {}
+      var popup = $ionicPopup.show({
+        scope: $scope,
+        template: '<input type="text" ng-model="data.name" placeholder="Set Title" /> <br><input ng-model="data.date" placeholder="Date (options)" />',
+        buttons: [
+          {text: 'Cancel'},
+          {
+            text: '<b>Save</b>',
+            type: 'button-positive',
+            onTap: function (e) {
+              return $scope.data
+
+            }
+          }
+        ]
+      })
+      popup.then(function (data) {
+
+        setlist.create(data)
+      })
+    }
+  })
+  .controller('SetlistDetailCtrl', function (setlist, songs) {
+    this.set = setlist.currentSet
     this.toggleExpandSong = function (song) {
       song.expand = !song.expand
     }
+
     this.addSongToSet = function (set) {
       var name = prompt('enter song name')
       var results = songs.fuzzySearchByName(name)
@@ -95,6 +130,7 @@ angular.module('starter.controllers', [])
         setlist.addSongByName(set, results[0][1])
       }
     }
+
     this.removeSongFromSet = function (set, song, i) {
       set.songs.splice(i, 1)
       setlist.update(set)

@@ -1,6 +1,6 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-  .run(function ($ionicPlatform) {
+  .run(function ($ionicPlatform, songs) {
     $ionicPlatform.ready(function () {
 
       if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -12,6 +12,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         StatusBar.styleDefault()
       }
     })
+    songs.get()
   })
 
   .config(function ($stateProvider, $urlRouterProvider) {
@@ -52,6 +53,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             controller: 'SetlistCtrl as ctrl'
           }
         }
+      })
+      .state('setlist-detail', {
+        url: '/setlist/detail',
+        templateUrl: 'templates/set-detail.html',
+        controller: 'SetlistDetailCtrl as ctrl'
       })
 
     $urlRouterProvider.otherwise('/tab/song')
